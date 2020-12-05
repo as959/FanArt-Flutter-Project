@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "779305984571",
+    "firebase_url": "https://fanart-563d1.firebaseio.com",
+    "project_id": "fanart-563d1",
+    "storage_bucket": "fanart-563d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779305984571:android:9dd1ee8ef53cfae997f21e",
+        "android_client_info": {
+          "package_name": "com.example.fanart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779305984571-ab45amhkvks26vjhuk2mr8kabr9u50l8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ_XhKbm0_tO_Sghyxa-d7j1fo3BNsOGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779305984571-ab45amhkvks26vjhuk2mr8kabr9u50l8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
