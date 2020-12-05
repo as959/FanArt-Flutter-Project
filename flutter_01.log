@@ -1,0 +1,52 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run --machine --target lib\main.dart -d 820daebf --track-widget-creation --dart-define=flutter.inspector.structuredErrors=true --start-paused --web-server-debug-protocol ws --web-server-debug-backend-protocol ws --web-allow-expose-url
+
+## exception
+
+SocketException: SocketException: OS Error: A request to send or receive data was disallowed because the socket is not connected and (when sending on a datagram socket using a sendto call) no address was supplied.
+, errno = 10057, address = 127.0.0.1, port = 64310
+
+```
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, 1.21.0-9.2.pre, on Microsoft Windows [Version 10.0.18362.1082], locale en-IN)
+    • Flutter version 1.21.0-9.2.pre at C:\Program Files\flutter
+    • Framework revision 81a45ec2e5 (8 weeks ago), 2020-08-27 14:14:33 -0700
+    • Engine revision 20a9531835
+    • Dart version 2.10.0 (build 2.10.0-7.3.beta)
+
+[!] Android toolchain - develop for Android devices (Android SDK version 28.0.3)
+    • Android SDK at C:\Users\jaina\AppData\Local\Android\sdk
+    • Platform android-30, build-tools 28.0.3
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+    ! Some Android licenses not accepted.  To resolve this, run: flutter doctor --android-licenses
+
+[✓] Chrome - develop for the web
+    • Chrome at C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+
+[!] Android Studio (version 3.5)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    ✗ Flutter plugin not installed; this adds Flutter specific functionality.
+    ✗ Dart plugin not installed; this adds Dart specific functionality.
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+
+[✓] VS Code (version 1.50.1)
+    • VS Code at C:\Users\jaina\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.15.1
+
+[✓] Connected device (4 available)
+    • POCO F1 (mobile) • 820daebf   • android-arm64  • Android 10 (API 29)
+    • Web Server (web) • web-server • web-javascript • Flutter Tools
+    • Chrome (web)     • chrome     • web-javascript • Google Chrome 86.0.4240.75
+    • Edge (web)       • edge       • web-javascript • Microsoft Edge 86.0.622.43
+
+! Doctor found issues in 2 categories.
+```
