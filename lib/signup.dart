@@ -48,8 +48,12 @@ class MyCustomFormState extends State<MySignForm> {
         var filename = "post" + DateTime.now().toString();
         var userid = newUser.user.uid;
         var ref = storageRef.ref('/Users/$userid/profile/$filename.png');
-        await ref.putFile(imageURI);
-        var url = await ref.getDownloadURL();
+        var url =
+            "https://firebasestorage.googleapis.com/v0/b/fanart-563d1.appspot.com/o/Users%2F0%2Fdefault_pfp.png?alt=media&token=5dcf593c-5f97-425a-a348-b437eb4852fe";
+        if (imageURI != null) {
+          await ref.putFile(imageURI);
+          url = await ref.getDownloadURL();
+        }
         //User user = newUser.user;
         //await user.updateProfile(displayName: name.text);
         await userRef.once().then((DataSnapshot snapshot) {

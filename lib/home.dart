@@ -1,6 +1,7 @@
 //import 'package:fanart/takePic.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'profile_page.dart';
 import 'package:fanart/posts.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -25,6 +26,7 @@ class HomeState extends State<Home> {
   bool isOpen;
   bool menuOn;
   bool flag;
+  bool s = false;
   CameraDescription camera;
   List<Widget> homePosts = new List();
   List<Widget> userPosts;
@@ -36,6 +38,11 @@ class HomeState extends State<Home> {
     isOpen = false;
     menuOn = false;
 
+    ;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     if (homePosts.length == 0) {
       postRef.once().then((DataSnapshot snapshot) {
         print(snapshot.value);
@@ -50,7 +57,7 @@ class HomeState extends State<Home> {
             homePosts.add(Post(ref: temp));
             counter += 1;
           }
-          flag = true;
+          setState(() {});
         } catch (e) {
           var x = snapshot.value.keys.toString()[1];
           print("hi " + x);
@@ -60,13 +67,7 @@ class HomeState extends State<Home> {
         }
       });
     }
-    ;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     print(homePosts.length);
-    while (flag == false) continue;
     return MaterialApp(
         title: header,
         theme: ThemeData(
