@@ -28,19 +28,33 @@ class HomeState extends State<Home> {
   List<Widget> homePosts = new List();
   List<Widget> userPosts;
   HomeState() {
-    header = 'user1';
+    if (Uploader.username == null) Uploader.getUsername();
+    header =
+        Uploader.username == null ? 'waiting for username' : Uploader.username;
     isOpen = false;
     menuOn = false;
 
     if (homePosts.length == 0) {
       postRef.once().then((DataSnapshot snapshot) {
         setState(() {});
-        List<dynamic> values = snapshot.value;
-        int counter = 0;
-        for (Map x in values) {
-          String temp = 'posts/' + counter.toString();
-          homePosts.add(FriendPost(ref: temp));
-          counter += 1;
+        print(snapshot.value);
+        try {
+          List<dynamic> values = snapshot.value;
+          print(values);
+          var counter = 0;
+          for (Map x in values) {
+            print("X is " + x.toString());
+            String temp = 'posts/' + counter.toString();
+            print("hey" + temp);
+            homePosts.add(Post(ref: temp));
+            counter += 1;
+          }
+        } catch (e) {
+          var x = snapshot.value.keys.toString()[1];
+          print("hi " + x);
+          String temp = 'posts/' + x;
+          print("hey" + temp);
+          homePosts.add(Post(ref: temp));
         }
       });
     }
@@ -60,7 +74,7 @@ class HomeState extends State<Home> {
           Scaffold(
             appBar: AppBar(
               title: Text(
-                "Other's Artpages",
+                "FanArt",
                 style: TextStyle(
                     fontFamily: 'ComicNeue',
                     fontSize: 15.0,
@@ -116,7 +130,7 @@ class HomeState extends State<Home> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Profile("user1", "user1"),
+                                builder: (context) => Profile(),
                               ),
                             );
                           }),
@@ -128,7 +142,7 @@ class HomeState extends State<Home> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Profile("user1", "user1"),
+                                builder: (context) => Profile(),
                               ),
                             );
                           }),
@@ -137,7 +151,7 @@ class HomeState extends State<Home> {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Profile('user1', 'user1'),
+                            builder: (context) => Profile(),
                           ),
                         ),
                       )

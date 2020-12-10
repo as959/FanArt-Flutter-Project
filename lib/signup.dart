@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:fanart/explore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+FirebaseDatabase database = FirebaseDatabase.instance;
+DatabaseReference myRef = database.reference();
+DatabaseReference userRef = myRef.child('/users');
+final storageRef =
+    FirebaseStorage.instanceFor(bucket: 'gs://fanart-563d1.appspot.com');
 
 class MySignForm extends StatefulWidget {
   @override
@@ -37,13 +45,35 @@ class MyCustomFormState extends State<MySignForm> {
       print("newuser:$newUser");
       if (newUser != null) {
         print("Should push");
-        User user = newUser.user;
-        await user.updateProfile(displayName: name.text);
+        var filename = "post" + DateTime.now().toString();
+        var userid = newUser.user.uid;
+        var ref = storageRef.ref('/Users/$userid/profile/$filename.png');
+        await ref.putFile(imageURI);
+        var url = await ref.getDownloadURL();
+        //User user = newUser.user;
+        //await user.updateProfile(displayName: name.text);
+        await userRef.once().then((DataSnapshot snapshot) {
+          List<dynamic> userList = new List<dynamic>.from(snapshot.value);
+          print(userList);
+          userList.add({
+            "followers": [],
+            "following": [],
+            "uid": newUser.user.uid,
+            "username": username.text,
+            "email": email.text,
+            "pfppath": url,
+          });
+          Map<String, dynamic> updates = {};
+          updates['users'] = userList;
+          myRef.update(updates);
+          print("User id is : " + newUser.user.uid);
+        });
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Explore(newUser.user.uid)),
         );
-        print('displayname= ${user.displayName}');
+        //print('displayname= ${user.displayName}');
       }
 
       print("over here");
@@ -55,7 +85,7 @@ class MyCustomFormState extends State<MySignForm> {
             return AlertDialog(
               backgroundColor: Colors.teal[300],
               title: Text("Error"),
-              content: Text(e.message),
+              content: Text(e.toString()),
               actions: [
                 FlatButton(
                   child: Text("Ok"),

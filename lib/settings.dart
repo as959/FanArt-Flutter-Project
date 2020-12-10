@@ -1,8 +1,7 @@
 import 'package:fanart/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fanart/login.dart';
-import 'package:fanart/signup.dart';
+import 'package:fanart/main.dart';
 
 class SettingPage extends StatelessWidget {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -29,8 +28,7 @@ class SettingPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => Profile('user1', 'user1')),
+                MaterialPageRoute(builder: (context) => Profile()),
               );
             },
           ),
@@ -79,7 +77,7 @@ class SettingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MySignForm()),
+                    MaterialPageRoute(builder: (context) => IntroPage()),
                   );
                 }),
             FlatButton(
@@ -95,8 +93,7 @@ class SettingPage extends StatelessWidget {
                         signOut();
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => MyCustomForm()),
+                          MaterialPageRoute(builder: (context) => IntroPage()),
                         );
                       },
                     ),

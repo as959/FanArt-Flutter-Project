@@ -40,7 +40,7 @@ class GridPostState extends State<GridPost> {
   }
 }
 
-class FriendPost extends StatefulWidget {
+class Post extends StatefulWidget {
   final String avatar_path;
   final String ref;
   int likes;
@@ -52,7 +52,7 @@ class FriendPost extends StatefulWidget {
   String path =
       "https://firebasestorage.googleapis.com/v0/b/fanart-563d1.appspot.com/o/loading.png?alt=media&token=550ecd8b-d694-4c04-8eb6-9df4191036da";
   final String date = dtformat.format(DateTime.now());
-  FriendPost({this.avatar_path, @required this.ref}) {
+  Post({this.avatar_path, @required this.ref}) {
     print(this.ref);
 
     print(ref);
@@ -64,18 +64,19 @@ class FriendPost extends StatefulWidget {
       print(x);
       Map<dynamic, dynamic> values = snapshot.value;
       print(values["ImagePath"]);
-      this.username = values["posterid"].toString();
+      this.username = values["pname"];
       this.path = values["ImagePath"];
       this.likes = int.parse(values["likes"].toString());
     });
   }
+
   @override
-  FriendPostState createState() => FriendPostState(this.ref);
+  PostState createState() => PostState(this.ref);
 }
 
-class FriendPostState extends State<FriendPost> {
+class PostState extends State<Post> {
   DatabaseReference pRef;
-  FriendPostState(ref) {
+  PostState(ref) {
     this.pRef = myRef.child(ref);
     pRef.onValue.listen((event) {
       print("HEllo");
@@ -86,7 +87,7 @@ class FriendPostState extends State<FriendPost> {
       print(x);
       Map<dynamic, dynamic> values = snapshot.value;
       print(values["ImagePath"]);
-      widget.username = values["posterid"].toString();
+      widget.username = values["pname"];
       widget.path = values["ImagePath"];
       int t = int.parse(values['likes'].toString());
       widget.likes = t;

@@ -4,25 +4,28 @@ import 'package:fanart/home.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fanart/uploadImage.dart';
-import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'settings.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 DatabaseReference myRef = database.reference();
 DatabaseReference postRef = myRef.child('posts');
+final _auth = FirebaseAuth.instance;
+var currentUser = _auth.currentUser;
 
 class Profile extends StatefulWidget {
-  final String username;
-  final String user;
-  Profile(this.username, this.user);
+  String username;
+  Profile() {
+    this.username = Uploader.username;
+  }
   @override
   ProfileState createState() => ProfileState();
 }
 
 class ProfileState extends State<Profile> with TickerProviderStateMixin {
   // This widget is the root of your application.
-  String username;
-  String user;
+  String username = Uploader.username;
+
   Image img;
   String header;
   bool isOpen;
@@ -32,6 +35,7 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
   ProfileState() {
     isOpen = false;
     menuOn = false;
+
     myAnimation = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
     if (posts.length == 0) {
@@ -42,9 +46,9 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
 
         for (Map x in values) {
           print("Hey" + x.toString());
-          if (x['posterid'] == '1') {
+          if (x['posterid'] == currentUser.uid) {
             posts.add(GridPost(
-              username: 'user1',
+              username: x['username'],
               img: Image.network(x['ImagePath']),
             ));
           }
@@ -85,7 +89,7 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
         ),
       ),
       child: MaterialApp(
-          title: widget.user,
+          title: username,
           theme: ThemeData(
             primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -103,7 +107,7 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
               backgroundColor: Colors.teal[200],
               title: new Center(
                   child: Text(
-                'user1',
+                username,
                 style: TextStyle(
                     fontFamily: 'ComicNeue',
                     fontSize: 15.0,
@@ -116,14 +120,16 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
               margin: EdgeInsets.only(left: 30.0, top: 30.0),
               child: CircleAvatar(
                 radius: 40,
-                backgroundImage: AssetImage('images/pfp_myUsername.png'),
+                backgroundImage: Uploader.profilepath == null
+                    ? AssetImage('images/pfp_myUsername.png')
+                    : Image.network(Uploader.profilepath).image,
               ),
             ),
           ]),
           SizedBox(
             height: 15,
           ),
-          Text(widget.username + "'s Artbook ",
+          Text(username + "'s Artbook ",
               style: TextStyle(
                   fontFamily: 'ComicNeue',
                   fontSize: 15.0,
@@ -175,8 +181,9 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
                   CircleIconButton(
                       tooltip: 'Click from Camera',
                       icon: Icon(Icons.add_a_photo),
-                      onPress: () {
-                        Uploader.imgFromCam();
+                      onPress: () async {
+                        var temp = await Uploader.imgFromCam();
+                        posts.add(temp);
                         setState(() {});
                       }),
                   SizedBox(
@@ -185,10 +192,10 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
                   CircleIconButton(
                       tooltip: 'Upload from Gallery',
                       icon: Icon(Icons.add_photo_alternate),
-                      onPress: () {
-                        setState(() {
-                          Uploader.imgFromGallery();
-                        });
+                      onPress: () async {
+                        var temp = await Uploader.imgFromGallery();
+                        await posts.add(temp);
+                        setState(() {});
                       }),
                   SizedBox(
                     height: 10,
