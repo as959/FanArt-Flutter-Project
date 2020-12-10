@@ -24,10 +24,12 @@ class HomeState extends State<Home> {
   String header;
   bool isOpen;
   bool menuOn;
+  bool flag;
   CameraDescription camera;
   List<Widget> homePosts = new List();
   List<Widget> userPosts;
   HomeState() {
+    flag = false;
     if (Uploader.username == null) Uploader.getUsername();
     header =
         Uploader.username == null ? 'waiting for username' : Uploader.username;
@@ -36,7 +38,6 @@ class HomeState extends State<Home> {
 
     if (homePosts.length == 0) {
       postRef.once().then((DataSnapshot snapshot) {
-        setState(() {});
         print(snapshot.value);
         try {
           List<dynamic> values = snapshot.value;
@@ -49,6 +50,7 @@ class HomeState extends State<Home> {
             homePosts.add(Post(ref: temp));
             counter += 1;
           }
+          flag = true;
         } catch (e) {
           var x = snapshot.value.keys.toString()[1];
           print("hi " + x);
@@ -64,6 +66,7 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     print(homePosts.length);
+    while (flag == false) continue;
     return MaterialApp(
         title: header,
         theme: ThemeData(

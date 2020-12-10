@@ -171,13 +171,16 @@ class PostState extends State<Post> {
               SizedBox(
                 width: 15,
               ),
-              Row(crossAxisAlignment: CrossAxisAlignment.baseline, children: [
-                Text(widget.username),
-                Text(
-                  "  Posted at " + widget.date + "\n",
-                  style: TextStyle(fontSize: 7),
-                ),
-              ]),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.ideographic,
+                  children: [
+                    Text(widget.username),
+                    Text(
+                      "  Posted at " + widget.date + "\n",
+                      style: TextStyle(fontSize: 7),
+                    ),
+                  ]),
             ]),
             SizedBox(
               height: 5,
