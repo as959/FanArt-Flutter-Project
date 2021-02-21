@@ -94,6 +94,11 @@ class PostState extends State<Post> {
       widget.dislikes = int.parse(values['dislikes'].toString());
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
   void addLikes() {
     int temp = widget.likes;
     int temp2 = widget.dislikes;

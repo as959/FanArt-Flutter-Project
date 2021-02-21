@@ -1,15 +1,20 @@
+import 'package:fanart/home.dart';
 import 'package:flutter/material.dart';
 import 'package:fanart/signup.dart';
 import 'package:fanart/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  final auth = FirebaseAuth.instance;
+  final  user = auth.currentUser;
+  runApp(MyApp(user));
 }
 
 class MyApp extends StatelessWidget {
+  var user;
+  MyApp(this.user);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,14 +23,18 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         debugShowCheckedModeBanner: false,
-        home: IntroPage());
+        home: IntroPage(this.user));
   }
 }
 
 class IntroPage extends StatelessWidget {
+  var user;
+  IntroPage(this.user);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return user!=null?
+    Home()
+    :Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

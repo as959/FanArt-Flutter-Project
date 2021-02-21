@@ -210,6 +210,20 @@ class ProfileState extends State<Profile> with TickerProviderStateMixin {
                               builder: (context) => SettingPage()),
                         );
                       }),
+                      SizedBox(
+                    height: 10,
+                  ),
+                  /*
+                  CircleIconButton(
+                      tooltip: 'Home',
+                      icon: Icon(Icons.home),
+                      onPress: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home()),
+                        );
+                      })*/
                 ],
               )),
         ),

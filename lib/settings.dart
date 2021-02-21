@@ -75,9 +75,10 @@ class SettingPage extends StatelessWidget {
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
+                  signOut();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => IntroPage()),
+                    MaterialPageRoute(builder: (context) => IntroPage(null)),
                   );
                 }),
             FlatButton(
@@ -93,7 +94,7 @@ class SettingPage extends StatelessWidget {
                         signOut();
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => IntroPage()),
+                          MaterialPageRoute(builder: (context) => IntroPage(null)),
                         );
                       },
                     ),

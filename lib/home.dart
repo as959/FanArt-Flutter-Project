@@ -31,6 +31,7 @@ class HomeState extends State<Home> {
   List<Widget> homePosts = new List();
   List<Widget> userPosts;
   HomeState() {
+    print("Hello There");
     flag = false;
     if (Uploader.username == null) Uploader.getUsername();
     header =
@@ -90,7 +91,9 @@ class HomeState extends State<Home> {
             body: Column(children: [
               Expanded(
                 child: homePosts.length == 0
-                    ? Container()
+                    ? Container(
+                      child:Text("Hello There"),
+                    )
                     : ListView.separated(
                         padding: const EdgeInsets.all(8),
                         itemCount: homePosts.length,
